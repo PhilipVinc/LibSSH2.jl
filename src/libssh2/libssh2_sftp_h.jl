@@ -22,16 +22,16 @@ function libssh2_sftp_open_ex(sftp, filename, filename_len, flags, mode, open_ty
     ccall((:libssh2_sftp_open_ex, libssh2), Ptr{LIBSSH2_SFTP_HANDLE}, (Ptr{LIBSSH2_SFTP}, Cstring, UInt32, Culong, Clong, Cint), sftp, filename, filename_len, flags, mode, open_type)
 end
 
-function libssh2_sftp_read(handle, buffer, maxlen)
-    ccall((:libssh2_sftp_read, libssh2), Cint, (Ptr{LIBSSH2_SFTP_HANDLE}, Cstring, Csize_t), handle, buffer, maxlen)
+function libssh2_sftp_read(handle, buffer, buffer_maxlen)
+    ccall((:libssh2_sftp_read, libssh2), ssize_t, (Ptr{LIBSSH2_SFTP_HANDLE}, Cstring, Csize_t), handle, buffer, buffer_maxlen)
 end
 
 function libssh2_sftp_readdir_ex(handle, buffer, buffer_maxlen, longentry, longentry_maxlen, attrs)
     ccall((:libssh2_sftp_readdir_ex, libssh2), Cint, (Ptr{LIBSSH2_SFTP_HANDLE}, Cstring, Csize_t, Cstring, Csize_t, Ptr{LIBSSH2_SFTP_ATTRIBUTES}), handle, buffer, buffer_maxlen, longentry, longentry_maxlen, attrs)
 end
 
-function libssh2_sftp_write()
-    ccall((:libssh2_sftp_write, libssh2), Cint, ())
+function libssh2_sftp_write(handle, buffer, count)
+    ccall((:libssh2_sftp_write, libssh2), ssize_t, (Ptr{LIBSSH2_SFTP_HANDLE}, Cstring, Csize_t), handle, buffer, count)
 end
 
 function libssh2_sftp_fsync(handle)

@@ -170,8 +170,8 @@ function libssh2_channel_process_startup(channel, request, request_len, message,
     ccall((:libssh2_channel_process_startup, libssh2), Cint, (Ptr{LIBSSH2_CHANNEL}, Cstring, UInt32, Cstring, UInt32), channel, request, request_len, message, message_len)
 end
 
-function libssh2_channel_read_ex()
-    ccall((:libssh2_channel_read_ex, libssh2), Cint, ())
+function libssh2_channel_read_ex(channel, stream_id, buf, buflen)
+    ccall((:libssh2_channel_read_ex, libssh2), ssize_t, (Ptr{LIBSSH2_CHANNEL}, Cint, Cstring, Csize_t), channel, stream_id, buf, buflen)
 end
 
 function libssh2_poll_channel_read(channel, extended)
@@ -190,8 +190,8 @@ function libssh2_channel_receive_window_adjust2(channel, adjustment, force, stor
     ccall((:libssh2_channel_receive_window_adjust2, libssh2), Cint, (Ptr{LIBSSH2_CHANNEL}, Culong, Cuchar, Ptr{UInt32}), channel, adjustment, force, storewindow)
 end
 
-function libssh2_channel_write_ex()
-    ccall((:libssh2_channel_write_ex, libssh2), Cint, ())
+function libssh2_channel_write_ex(channel, stream_id, buf, buflen)
+    ccall((:libssh2_channel_write_ex, libssh2), ssize_t, (Ptr{LIBSSH2_CHANNEL}, Cint, Cstring, Csize_t), channel, stream_id, buf, buflen)
 end
 
 function libssh2_channel_window_write_ex(channel, window_size_initial)
@@ -275,7 +275,7 @@ function libssh2_scp_send_ex(session, path, mode, size, mtime, atime)
 end
 
 function libssh2_scp_send64(session, path, mode, size, mtime, atime)
-    ccall((:libssh2_scp_send64, libssh2), Ptr{LIBSSH2_CHANNEL}, (Ptr{LIBSSH2_SESSION}, Cstring, Cint, libssh2_int64_t, Cint, Cint), session, path, mode, size, mtime, atime)
+    ccall((:libssh2_scp_send64, libssh2), Ptr{LIBSSH2_CHANNEL}, (Ptr{LIBSSH2_SESSION}, Cstring, Cint, libssh2_int64_t, Ctime_t, Ctime_t), session, path, mode, size, mtime, atime)
 end
 
 function libssh2_base64_decode(session, dest, dest_len, src, src_len)

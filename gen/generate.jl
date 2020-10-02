@@ -16,12 +16,14 @@ HEADERS = [joinpath(LIBSSH2_INCLUDE_PATH, header) for header in readdir(LIBSSH2_
 COMMON_HEADERS = [joinpath(LIBSSH2_SRC_PATH, header) for header in readdir(LIBSSH2_SRC_PATH) if endswith(header, ".h")]
 CLANG_INCLUDES = [CLANG_INCLUDE]
 
-SRC_DIR = "../src"
+SRC_DIR = "../src/libssh2"
+mkpath(SRC_DIR)
+
 clang_args = String[]
 
 if Sys.isapple()
     for header in find_std_headers()
-        # push!(clang_args, "-I"*header)
+        push!(clang_args, "-I"*header)
     end
 end
 
@@ -40,7 +42,7 @@ context = init(; headers = HEADERS,
             header_outputfile = header -> begin
                 p1 = SRC_DIR
                 p2 = replace(basename(header), "." => "_") * ".jl"
-                @info header p1 p2 
+                @info header p1 p2
                 joinpath(p1,p2)
             end,
             clang_diagnostics = true,
@@ -49,6 +51,8 @@ context = init(; headers = HEADERS,
 context.options.wrap_structs = true
 
 run(context, false)
+
+output_files = readdir(SRC_DIR, join=true)
 
 using CSTParser, Tokenize
 
