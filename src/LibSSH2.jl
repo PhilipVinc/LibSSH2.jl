@@ -15,13 +15,10 @@ struct libssh2_socket_t
 end
 Base.cconvert(::Type{libssh2_socket_t}, sock::TCPSocket) = libssh2_socket_t(reinterpret(Cint, Base._fd(sock)))
 
-include("libssh2_api.jl")
-
-include("libssh2_h.jl")
-include("libssh2_publickey_h.jl")
-include("libssh2_sftp_h.jl")
-
-include("Mime_ext.jl")
+include("libssh2/libssh2_api.jl")
+include("libssh2/libssh2_h.jl")
+include("libssh2/libssh2_publickey_h.jl")
+include("libssh2/libssh2_sftp_h.jl")
 
 version() = unsafe_string(libssh2_version(0))
 
