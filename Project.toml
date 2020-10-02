@@ -3,6 +3,7 @@ uuid = "b27032c2-a3a7-50c8-80cd-2d36dbcbfd11"
 version = "0.6.1"
 
 [deps]
+FilePathsBase = "48062228-2e41-5def-b9a4-89aafe57970f"
 LibSSH2_jll = "29816b5a-b9ab-546f-933c-edad1886dfa8"
 MozillaCACerts_jll = "14a3606d-f60d-562e-9121-12d972cd8159"
 Sockets = "6462fe0b-24de-5631-8697-dd941f90decc"

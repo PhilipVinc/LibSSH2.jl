@@ -15,6 +15,9 @@ struct libssh2_socket_t
 end
 Base.cconvert(::Type{libssh2_socket_t}, sock::TCPSocket) = libssh2_socket_t(reinterpret(Cint, Base._fd(sock)))
 
+const ssize_t = Csize_t
+
+include("ctypes.jl")
 include("libssh2/libssh2_api.jl")
 include("libssh2/libssh2_h.jl")
 include("libssh2/libssh2_publickey_h.jl")

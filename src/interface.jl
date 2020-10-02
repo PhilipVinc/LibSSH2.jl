@@ -122,7 +122,7 @@ Base.filesize(session::SFTPSession, file::SFTPPath) = begin
 end
 Base.filesize(file::SSHFileDescriptor) = filesize(libssh2_sftp_fstat(file))
 
-function unsafe_read_atmost(file::SSHFileDescriptor, p::Ptr{UInt8}, n::Int)
+function unsafe_read_atmost(file::SSHFileDescriptor, p::Ptr{UInt8}, n::Integer)
     nr = libssh2_sftp_read(file, p, n)
     if nr == 0
     	file.eof = true
